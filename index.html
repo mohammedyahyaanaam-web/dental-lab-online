@@ -1,1 +1,808 @@
-Create dental lab index file
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#103b30">
+<title>نظام إدارة معمل الأسنان</title>
+
+<style>
+:root{
+--green:#103b30;--green2:#1b5946;--green3:#28765b;
+--gold:#c7a65b;--bg:#f1f5f2;--white:#fff;
+--text:#24372f;--muted:#77867d;--border:#e1e9e3;
+--red:#b64040;--blue:#426f91;--shadow:0 5px 18px rgba(15,55,40,.08)
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.header{background:linear-gradient(135deg,#0b2922,#174c3c,#24674e);color:white;padding:25px 17px 23px;border-bottom:4px solid var(--gold)}
+.header-inner{max-width:1100px;margin:auto}
+.brand{font-size:23px;font-weight:bold;margin-bottom:10px}
+.lab-details{font-size:12px;color:#d9e9df;line-height:2}
+.header-badge{display:inline-block;background:#ffffff18;border:1px solid #ffffff35;padding:6px 12px;border-radius:20px;font-size:11px;margin-top:10px}
+.container{max-width:1100px;margin:auto;padding:14px}
+.page{display:none}.page.active{display:block}
+.card{background:white;border:1px solid var(--border);border-radius:17px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card-title{font-size:17px;font-weight:bold;color:var(--green);margin:0 0 15px}
+.welcome{background:linear-gradient(120deg,#174c3c,#28765b);color:white;border-radius:17px;padding:19px;margin-bottom:15px}
+.welcome h2{margin:0 0 8px;font-size:19px}
+.welcome p{margin:0;font-size:12px;color:#e1eee6;line-height:2}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.stat{background:white;border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:var(--shadow)}
+.stat span{font-size:11px;color:var(--muted)}
+.stat b{display:block;font-size:21px;color:var(--green);margin-top:8px;overflow-wrap:anywhere}
+.section-label{font-size:15px;font-weight:bold;color:var(--green);margin:18px 2px 11px}
+.menu-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.menu-btn{min-height:112px;background:white;border:1px solid var(--border);border-radius:16px;padding:15px 8px;color:var(--green);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.menu-icon{font-size:29px}.menu-btn strong{font-size:13px}.menu-btn small{font-size:10px;color:var(--muted)}
+.menu-btn.gold-menu{border-bottom:3px solid var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.field{margin-bottom:11px}
+label{display:block;font-size:12px;font-weight:bold;color:#43574c;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 10px;border:1px solid #d8e2db;border-radius:10px;background:white;color:var(--text);outline:none;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--green3);box-shadow:0 0 0 2px #28765b18}
+textarea{min-height:75px;resize:vertical}
+.btn{border:0;border-radius:10px;padding:11px 15px;background:var(--green);color:white;font-size:13px}
+.btn.gold{background:var(--gold);color:#26372c}
+.btn.light{background:#eaf1ec;color:var(--green)}
+.btn.red{background:var(--red)}.btn.blue{background:var(--blue)}
+.btn.small{padding:7px 9px;font-size:11px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.back{background:linear-gradient(135deg,#174c3c,#28765b);color:white;border:1px solid var(--gold);padding:10px 16px;border-radius:10px;margin-bottom:13px;font-size:12px;font-weight:bold}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:590px;font-size:12px}
+th,td{padding:10px 8px;text-align:right;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:#edf3ef;color:var(--green);white-space:nowrap}
+td{line-height:1.7}
+.pill{display:inline-block;background:#e8f2eb;color:var(--green);border-radius:20px;padding:5px 9px;font-size:10px}
+.muted{font-size:11px;color:var(--muted)}
+.empty{text-align:center;padding:22px;color:var(--muted);font-size:13px}
+.notice{background:#fff7e7;color:#73561f;border-radius:10px;padding:11px;font-size:11px;line-height:1.9;margin-bottom:12px}
+.palmer-section{border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px;background:#fbfdfb}
+.palmer-heading{display:flex;justify-content:space-between;gap:8px;margin-bottom:10px;font-size:13px;font-weight:bold;color:var(--green)}
+.palmer-heading small{font-size:10px;color:var(--muted);font-weight:normal}
+.toothgrid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:5px;direction:ltr}
+.tooth{background:#edf3ef;color:var(--green);border:1px solid #cfdbd2;border-radius:7px;padding:9px 1px;font-size:11px;font-weight:bold;min-width:0}
+.tooth small{display:block;font-size:8px;font-weight:normal;margin-top:4px}
+.tooth.selected{background:var(--gold);color:#1d3025;border-color:#a78a48}
+.selected-box{background:#f8f5e9;padding:11px;border-radius:9px;font-size:11px;margin-top:10px;line-height:2}
+.tooth-detail{display:inline-block;background:white;border:1px solid #e6ddbd;border-radius:7px;padding:5px 8px;margin:3px}
+.tooth-detail b{color:var(--green)}
+.footer{text-align:center;padding:20px;color:#839187;font-size:10px}
+.hidden{display:none!important}
+.logo-preview-box{border:1px dashed #b8cbbd;border-radius:12px;padding:15px;background:#f8fbf8;margin-top:8px;text-align:center}
+.logo-preview{max-width:180px;max-height:120px;object-fit:contain;display:block;margin:0 auto 10px;border-radius:7px}
+.logo-preview-empty{color:var(--muted);font-size:12px;padding:15px}
+.logo-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:10px}
+.manager-signature{margin-top:35px;padding-top:15px;display:flex;justify-content:flex-start}
+.manager-signature-box{min-width:220px;max-width:300px;text-align:center;border-top:1px solid #999;padding-top:10px;font-size:12px;line-height:2}
+.manager-signature-box strong{color:#103b30;font-size:13px}
+.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0b2922,#174c3c,#28765b);z-index:99999;display:flex;align-items:center;justify-content:center;padding:18px}
+.login-card{background:white;width:100%;max-width:390px;padding:25px;border-radius:18px;box-shadow:0 10px 40px #0003}
+.login-card h2{text-align:center;color:var(--green);margin-top:0}
+.login-card p{text-align:center;color:var(--muted);font-size:12px;line-height:1.8}
+#syncStatus{font-size:11px;padding:7px 10px;border-radius:20px;background:#eaf1ec;color:var(--green);display:inline-block;margin-top:8px}
+.permission-row{display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid var(--border);font-size:12px}
+.permission-row input{width:auto}
+@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}.menu-grid{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(3,1fr)}}
+@media print{.no-print{display:none!important}body{background:white}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-screen">
+ <div class="login-card">
+  <h2>🦷 نظام إدارة معمل الأسنان</h2>
+  <p>يرجى تسجيل الدخول للمتابعة</p>
+  <div class="field"><label>البريد الإلكتروني</label><input id="loginEmail" type="email" autocomplete="username"></div>
+  <div class="field"><label>كلمة المرور</label><input id="loginPassword" type="password" autocomplete="current-password"></div>
+  <button class="btn" style="width:100%" onclick="login()">تسجيل الدخول</button>
+  <div id="loginError" style="color:#b64040;font-size:12px;margin-top:12px;text-align:center"></div>
+ </div>
+</div>
+
+<header class="header">
+ <div class="header-inner">
+  <div class="brand" id="headerLab">🦷 معمل الأسنان</div>
+  <div class="lab-details" id="headerDetails">نظام إدارة معمل الأسنان</div>
+  <div class="header-badge">نظام الحسابات وإدارة التركيبات</div>
+  <div id="syncStatus">غير متصل</div>
+  <div style="margin-top:8px;font-size:11px" id="userInfo"></div>
+  <button class="btn small red no-print" onclick="logout()" style="margin-top:8px">تسجيل الخروج</button>
+ </div>
+</header>
+
+<div class="container">
+
+<section id="home" class="page active">
+ <div class="welcome"><h2 id="welcomeLab">مرحباً بكم في معمل الأسنان</h2><p>نظام متكامل لإدارة الحالات الطبية والتركيبات والحسابات والأطباء.</p></div>
+ <div class="stats">
+  <div class="stat"><span>إجمالي الطلبات</span><b id="stOrders">0</b></div>
+  <div class="stat"><span>قيد التنفيذ</span><b id="stProgress">0</b></div>
+  <div class="stat"><span>جاهزة للتسليم</span><b id="stReady">0</b></div>
+  <div class="stat"><span>تم تسليمها</span><b id="stDelivered">0</b></div>
+  <div class="stat"><span>إجمالي قيمة الطلبات</span><b id="stRevenue">0</b></div>
+  <div class="stat"><span>إجمالي المحصل</span><b id="stPaid">0</b></div>
+  <div class="stat"><span>ديون الأطباء</span><b id="stDebt">0</b></div>
+  <div class="stat"><span>صافي النقد بعد المصروفات</span><b id="stProfit">0</b></div>
+ </div>
+ <div class="section-label">📋 إدارة المعمل</div>
+ <div class="menu-grid">
+  <button class="menu-btn gold-menu" onclick="go('doctors')"><span class="menu-icon">👨‍⚕️</span><strong>الأطباء والعيادات</strong><small>إضافة وإدارة الأطباء</small></button>
+  <button class="menu-btn gold-menu" onclick="go('orders')"><span class="menu-icon">🦷</span><strong>طلبات العمل</strong><small>تسجيل ومتابعة الحالات</small></button>
+  <button class="menu-btn gold-menu" onclick="go('accounts')"><span class="menu-icon">💰</span><strong>الحسابات والتحصيل</strong><small>الديون والدفعات</small></button>
+  <button class="menu-btn gold-menu" onclick="go('expenses')"><span class="menu-icon">🧾</span><strong>المصروفات</strong><small>تسجيل النفقات</small></button>
+  <button class="menu-btn" onclick="go('reports')"><span class="menu-icon">📊</span><strong>التقارير العامة</strong><small>تقارير المعمل</small></button>
+  <button class="menu-btn" onclick="go('settings')"><span class="menu-icon">⚙️</span><strong>إعدادات المعمل</strong><small>الاسم والأرقام والعنوان</small></button>
+  <button class="menu-btn" onclick="go('backup')"><span class="menu-icon">💾</span><strong>النسخ الاحتياطي</strong><small>حفظ واستعادة البيانات</small></button>
+ </div>
+ <div class="card" style="margin-top:17px"><h3 class="card-title">آخر طلبات العمل</h3><div id="homeRecent"></div></div>
+</section>
+
+<section id="doctors" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card">
+  <h3 class="card-title">👨‍⚕️ إضافة طبيب / عيادة</h3>
+  <input type="hidden" id="doctorId">
+  <div class="grid">
+   <div class="field"><label>اسم الطبيب *</label><input id="doctorName"></div>
+   <div class="field"><label>رقم الهاتف</label><input id="doctorPhone"></div>
+   <div class="field"><label>اسم العيادة</label><input id="clinicName"></div>
+   <div class="field"><label>المدينة</label><input id="clinicCity"></div>
+  </div>
+  <div class="field"><label>ملاحظات</label><textarea id="doctorNotes"></textarea></div>
+  <div class="actions"><button class="btn" onclick="saveDoctor()">💾 حفظ الطبيب</button><button class="btn light" onclick="clearDoctor()">تفريغ</button></div>
+ </div>
+ <div class="card"><h3 class="card-title">قائمة الأطباء والعيادات</h3><div id="doctorsTable"></div></div>
+</section>
+
+<section id="orders" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card">
+  <h3 class="card-title">🦷 تسجيل طلب عمل</h3><input type="hidden" id="orderId">
+  <div class="grid">
+   <div class="field"><label>رقم الطلب</label><input id="orderNo" readonly></div>
+   <div class="field"><label>تاريخ الاستلام</label><input id="orderDate" type="date"></div>
+   <div class="field"><label>الطبيب *</label><select id="orderDoctor"></select></div>
+   <div class="field"><label>اسم المريض</label><input id="patientName"></div>
+   <div class="field"><label>عدد الوحدات *</label><input id="orderUnits" type="number" min="1" value="1" oninput="updateOrderTotal()"></div>
+   <div class="field"><label>نوع العمل</label><select id="workType"><option>تاج Crown</option><option>جسر Bridge</option><option>تلبيسة زيركون</option><option>تلبيسة بورسلان</option><option>طقم أسنان كامل</option><option>طقم أسنان جزئي</option><option>تقاويم متحركه</option><option>شبكات معدنية</option><option>اسنان مؤقته</option><option>تركيبات متحركة</option><option>أعمال أخرى</option></select></div>
+   <div class="field"><label>المادة</label><select id="material"><option>زيركون</option><option>بورسلان</option><option>Vita</option><option>معدن خزفي</option><option>أكريليك</option><option>GC</option><option>PMMA</option><option>شمع</option><option>أخرى</option><option>Nortec</option></select></div>
+   <div class="field"><label>لون الأسنان</label><input id="toothColor" placeholder="A2"></div>
+   <div class="field"><label>سعر الوحدة</label><input id="orderPrice" type="number" min="0" value="0" oninput="updateOrderTotal()"></div>
+   <div class="field"><label>الإجمالي المحسوب</label><input id="orderTotalPreview" readonly value="0"></div>
+   <div class="field"><label>المدفوع عند التسجيل</label><input id="orderPaid" type="number" min="0" value="0"></div>
+   <div class="field"><label>موعد التسليم</label><input id="dueDate" type="date"></div>
+   <div class="field"><label>حالة الطلب</label><select id="orderStatus"><option>طلب جديد</option><option>قيد التجهيز</option><option>قيد التصنيع</option><option>مرحلة التشطيب</option><option>جاهز للتسليم</option><option>تم التسليم</option></select></div>
+  </div>
+  <div class="card">
+   <h3 class="card-title">🦷 تحديد الأسنان بنظام بالمر Palmer</h3>
+   <div class="notice">اختر الأسنان المطلوبة من الأقسام الأربعة. يمكنك تحديد أكثر من سن.</div>
+   <div class="palmer-section"><div class="palmer-heading"><span>الفك العلوي الأيمن</span><small>Upper Right</small></div><div class="toothgrid" id="upperRight"></div></div>
+   <div class="palmer-section"><div class="palmer-heading"><span>الفك العلوي الأيسر</span><small>Upper Left</small></div><div class="toothgrid" id="upperLeft"></div></div>
+   <div class="palmer-section"><div class="palmer-heading"><span>الفك السفلي الأيمن</span><small>Lower Right</small></div><div class="toothgrid" id="lowerRight"></div></div>
+   <div class="palmer-section"><div class="palmer-heading"><span>الفك السفلي الأيسر</span><small>Lower Left</small></div><div class="toothgrid" id="lowerLeft"></div></div>
+   <div class="selected-box" id="selectedTeeth">الأسنان المحددة: لا يوجد</div>
+   <button class="btn light small" type="button" onclick="clearTeeth()">مسح التحديد</button>
+  </div>
+  <div class="field"><label>ملاحظات الطبيب</label><textarea id="orderNotes"></textarea></div>
+  <div class="actions"><button class="btn" onclick="saveOrder()">💾 حفظ الطلب</button><button class="btn light" onclick="clearOrder()">طلب جديد</button></div>
+ </div>
+ <div class="card"><h3 class="card-title">سجل الطلبات</h3><div class="grid"><div class="field"><label>بحث 🔍</label><input id="orderSearch" oninput="renderOrders()"></div><div class="field"><label>الحالة</label><select id="statusFilter" onchange="renderOrders()"><option value="">كل الحالات</option><option>طلب جديد</option><option>قيد التجهيز</option><option>قيد التصنيع</option><option>مرحلة التشطيب</option><option>جاهز للتسليم</option><option>تم التسليم</option></select></div></div><div id="ordersTable"></div></div>
+</section>
+
+<section id="accounts" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card"><h3 class="card-title">💰 تسجيل دفعة</h3><div class="grid"><div class="field"><label>الطبيب</label><select id="paymentDoctor"></select></div><div class="field"><label>المبلغ</label><input id="paymentAmount" type="number" min="0"></div><div class="field"><label>التاريخ</label><input id="paymentDate" type="date"></div><div class="field"><label>البيان</label><input id="paymentNote"></div></div><button class="btn" onclick="savePayment()">حفظ الدفعة</button></div>
+ <div class="card"><h3 class="card-title">كشف حسابات الأطباء</h3><div id="accountsTable"></div></div>
+ <div class="card"><h3 class="card-title">سجل الدفعات</h3><div id="paymentsTable"></div></div>
+</section>
+
+<section id="expenses" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card"><h3 class="card-title">🧾 تسجيل مصروف</h3><div class="grid"><div class="field"><label>التاريخ</label><input id="expenseDate" type="date"></div><div class="field"><label>نوع المصروف</label><select id="expenseType"><option>مواد خام</option><option>أجور</option><option>كهرباء</option><option>إيجار</option><option>صيانة</option><option>نقل وتوصيل</option><option>أخرى</option></select></div><div class="field"><label>المبلغ</label><input id="expenseAmount" type="number" min="0"></div><div class="field"><label>البيان</label><input id="expenseNote"></div></div><button class="btn" onclick="saveExpense()">حفظ المصروف</button></div>
+ <div class="card"><h3 class="card-title">سجل المصروفات</h3><div id="expensesTable"></div></div>
+</section>
+
+<section id="reports" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card"><h3 class="card-title">📊 التقارير العامة</h3><div class="grid"><div class="field"><label>من تاريخ</label><input type="date" id="reportFrom"></div><div class="field"><label>إلى تاريخ</label><input type="date" id="reportTo"></div></div><div class="actions"><button class="btn" onclick="renderReport()">عرض التقرير</button><button class="btn gold" onclick="printReport()">📄 طباعة / PDF</button></div></div>
+ <div class="card"><div id="reportContent"></div></div>
+</section>
+
+<section id="settings" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card"><h3 class="card-title">⚙️ إعدادات المعمل</h3>
+  <div class="field"><label>اسم المعمل *</label><input id="setLabName"></div>
+  <div class="grid"><div class="field"><label>رقم الهاتف الأول</label><input id="setPhone1"></div><div class="field"><label>رقم الهاتف الثاني</label><input id="setPhone2"></div><div class="field"><label>رقم الهاتف الثالث</label><input id="setPhone3"></div><div class="field"><label>مكان المعمل</label><input id="setAddress"></div></div>
+  <div class="field"><label>عبارة تعريفية</label><input id="setExtra"></div>
+  <div class="field"><label>شعار المعمل</label><input type="file" id="setLogoFile" accept="image/*" onchange="handleLogoUpload(event)"><div class="logo-preview-box"><img id="logoPreview" class="logo-preview hidden"><div id="logoPreviewEmpty" class="logo-preview-empty">لم يتم اختيار شعار حتى الآن</div><div class="logo-actions"><button type="button" class="btn light small" onclick="document.getElementById('setLogoFile').click()">📷 اختيار صورة</button><button type="button" class="btn red small" onclick="removeLogo()">حذف الشعار</button></div></div></div>
+  <div class="field"><label>اسم مدير المعمل</label><input id="setManager"></div>
+  <button class="btn" onclick="saveSettings()">💾 حفظ معلومات المعمل</button>
+ </div>
+
+ <div class="card" id="workerManagement">
+  <h3 class="card-title">👥 إدارة العاملين</h3>
+  <div class="notice">أنشئ حساب العامل أولاً في Firebase Authentication، ثم انسخ UID الخاص به وضعه هنا. لا تضع كلمة المرور هنا.</div>
+  <div class="field"><label>UID العامل من Firebase Authentication</label><input id="workerUid"></div>
+  <div class="field"><label>اسم العامل</label><input id="workerName"></div>
+  <div class="field"><label>حالة الحساب</label><select id="workerActive"><option value="true">نشط</option><option value="false">موقوف</option></select></div>
+  <label>الأقسام المسموح بها</label>
+  <div class="permission-row"><input type="checkbox" id="permDoctors" checked> الأطباء والعيادات</div>
+  <div class="permission-row"><input type="checkbox" id="permOrders" checked> طلبات العمل</div>
+  <div class="permission-row"><input type="checkbox" id="permAccounts" checked> الحسابات والتحصيل</div>
+  <div class="permission-row"><input type="checkbox" id="permExpenses" checked> المصروفات</div>
+  <div class="permission-row"><input type="checkbox" id="permReports" checked> التقارير العامة</div>
+  <div class="permission-row"><input type="checkbox" id="permSettings"> إعدادات المعمل</div>
+  <div class="permission-row"><input type="checkbox" id="permBackup"> النسخ الاحتياطي</div>
+  <button class="btn" onclick="saveWorker()">حفظ العامل وصلاحياته</button>
+  <div id="workersList" style="margin-top:15px"></div>
+ </div>
+</section>
+
+<section id="backup" class="page">
+ <button class="back" onclick="go('home')">↩ الرئيسية</button>
+ <div class="card"><h3 class="card-title">💾 النسخ الاحتياطي</h3><div class="notice">احفظ نسخة احتياطية بشكل دوري على هاتفك أو في مكان آمن.</div><div class="actions"><button class="btn" onclick="backupData()">تنزيل نسخة احتياطية</button><button class="btn light" onclick="document.getElementById('restoreFile').click()">استعادة نسخة</button><input type="file" id="restoreFile" accept=".json" class="hidden" onchange="restoreData(event)"></div></div>
+ <div class="card"><h3 class="card-title">إدارة البيانات</h3><button class="btn red" onclick="clearAllData()">حذف جميع البيانات</button></div>
+</section>
+
+<div class="footer">تصميم وبرمجة م.محمد انعم 📱774185413 ©</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script>
+/* إعدادات Firebase الخاصة بمشروع Dental Lab Online */
+const firebaseConfig={
+ apiKey:"AIzaSyB6HVxykLWEgsRQzQQAwxsxrjEUafG3fc",
+ authDomain:"dental-lab-online.firebaseapp.com",
+ projectId:"dental-lab-online",
+ storageBucket:"dental-lab-online.firebasestorage.app",
+ messagingSenderId:"20685011473",
+ appId:"1:20685011473:web:b593a6e29b77283d0a8fb0"
+};
+
+/* رقم حساب المدير */
+const MANAGER_UID="5toZWredkcPkXYjstyoAJPNDTLD2";
+
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth();
+const fs=firebase.firestore();
+const cloudDoc=fs.collection("appData").doc("main");
+
+const KEY="DENTAL_LAB_PRO_V2";
+const today=()=>new Date().toISOString().slice(0,10);
+const money=n=>(Number(n)||0).toLocaleString("en-US",{maximumFractionDigits:2});
+const val=n=>Math.max(0,Number(n)||0);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+let db={
+ settings:{labName:"معمل الأسنان",phone1:"",phone2:"",phone3:"",address:"",extra:"",logo:"",manager:""},
+ doctors:[],orders:[],payments:[],expenses:[],nextOrder:1
+};
+let currentUser=null,userProfile=null,isManager=false;
+let permissions={};
+let selectedLogo="";
+let selectedTeeth=new Set();
+let cloudReady=false,applyingRemote=false;
+let cloudTimer=null,cloudQueue=Promise.resolve();
+let dataUnsubscribe=null,userUnsubscribe=null,workersUnsubscribe=null;
+
+const defaultPermissions={
+ doctors:true,orders:true,accounts:true,expenses:true,reports:true,settings:false,backup:false
+};
+
+function setSync(textValue,color){
+ const el=document.getElementById("syncStatus");
+ if(el){el.textContent=textValue;el.style.background=color||"#eaf1ec";}
+}
+function showLoginError(msg){document.getElementById("loginError").textContent=msg||"";}
+
+async function login(){
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ if(!email||!password)return showLoginError("أدخل البريد الإلكتروني وكلمة المرور");
+ showLoginError("");
+ try{
+  await auth.signInWithEmailAndPassword(email,password);
+ }catch(e){
+  showLoginError(authError(e));
+ }
+}
+function authError(e){
+ const code=e&&e.code;
+ const map={
+ "auth/invalid-email":"البريد الإلكتروني غير صحيح",
+ "auth/user-not-found":"الحساب غير موجود",
+ "auth/wrong-password":"كلمة المرور غير صحيحة",
+ "auth/invalid-credential":"بيانات الدخول غير صحيحة",
+ "auth/too-many-requests":"محاولات كثيرة. حاول لاحقاً",
+ "auth/network-request-failed":"تحقق من اتصال الإنترنت",
+ "auth/unauthorized-domain":"عنوان الموقع غير مضاف إلى النطاقات المسموحة في Firebase"
+ };
+ return map[code]||("تعذر تسجيل الدخول: "+(e.message||code||"خطأ غير معروف"));
+}
+async function logout(){
+ try{await auth.signOut();}catch(e){alert("تعذر تسجيل الخروج");}
+}
+function stopListeners(){
+ if(dataUnsubscribe)dataUnsubscribe();
+ if(userUnsubscribe)userUnsubscribe();
+ if(workersUnsubscribe)workersUnsubscribe();
+ dataUnsubscribe=userUnsubscribe=workersUnsubscribe=null;
+ cloudReady=false;
+}
+function showApplication(show){
+ document.getElementById("loginScreen").classList.toggle("hidden",show);
+ document.querySelector(".header").classList.toggle("hidden",!show);
+ document.querySelector(".container").classList.toggle("hidden",!show);
+}
+function loadLocal(){
+ try{
+  const x=JSON.parse(localStorage.getItem(KEY)||"null");
+  if(x&&typeof x==="object")db={...db,...x,settings:{...db.settings,...(x.settings||{})}};
+ }catch(e){console.warn("Local data read error",e);}
+}
+function saveLocal(){
+ try{localStorage.setItem(KEY,JSON.stringify(db));return true;}
+ catch(e){alert("تعذر الحفظ المحلي. قد تكون مساحة التخزين ممتلئة.");return false;}
+}
+function save(){
+ saveLocal();
+ if(cloudReady&&!applyingRemote&&currentUser){
+  clearTimeout(cloudTimer);
+  cloudTimer=setTimeout(queueCloudSave,650);
+ }
+ return true;
+}
+function queueCloudSave(){
+ if(!cloudReady||!currentUser||applyingRemote)return;
+ const payload=JSON.parse(JSON.stringify(db));
+ setSync("جارٍ مزامنة البيانات...","#fff4d8");
+ cloudQueue=cloudQueue.then(async()=>{
+  if(!cloudReady||!currentUser)return;
+  await cloudDoc.set({
+   data:payload,
+   updatedBy:currentUser.uid,
+   updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+  },{merge:true});
+  setSync("متصل - تمت المزامنة","#eaf1ec");
+ }).catch(e=>{
+  console.error(e);
+  setSync("تعذر المزامنة","#ffe8e8");
+  if(e.code==="resource-exhausted"||e.code==="invalid-argument")
+   alert("حجم البيانات أكبر من الحد المسموح في Firebase. حاول تقليل حجم الشعار أو النسخ الاحتياطية.");
+ });
+}
+function normalizeDb(x){
+ const base={
+  settings:{labName:"معمل الأسنان",phone1:"",phone2:"",phone3:"",address:"",extra:"",logo:"",manager:""},
+  doctors:[],orders:[],payments:[],expenses:[],nextOrder:1
+ };
+ if(!x||typeof x!=="object")return base;
+ return {
+  ...base,...x,
+  settings:{...base.settings,...(x.settings||{})},
+  doctors:Array.isArray(x.doctors)?x.doctors:[],
+  orders:Array.isArray(x.orders)?x.orders:[],
+  payments:Array.isArray(x.payments)?x.payments:[],
+  expenses:Array.isArray(x.expenses)?x.expenses:[],
+  nextOrder:Number(x.nextOrder)||1
+ };
+}
+async function startUser(user){
+ stopListeners();
+ currentUser=user;
+ isManager=user.uid===MANAGER_UID;
+ document.getElementById("loginPassword").value="";
+ showLoginError("");
+ try{
+  const userRef=fs.collection("users").doc(user.uid);
+  let snap=await userRef.get();
+  if(isManager){
+   if(!snap.exists){
+    await userRef.set({name:"مدير المعمل",role:"manager",active:true});
+   }
+   userProfile={name:"مدير المعمل",role:"manager",active:true,permissions:{}};
+   permissions={doctors:true,orders:true,accounts:true,expenses:true,reports:true,settings:true,backup:true};
+  }else{
+   if(!snap.exists)throw new Error("حسابك غير مضاف من مدير المعمل");
+   userProfile=snap.data()||{};
+   if(userProfile.role!=="worker"||userProfile.active!==true)
+    throw new Error("حسابك غير مفعل. راجع مدير المعمل");
+   permissions={...defaultPermissions,...(userProfile.permissions||{})};
+  }
+  document.getElementById("userInfo").textContent=(userProfile.name||user.email)+" - "+(isManager?"مدير":"عامل");
+  document.getElementById("workerManagement").classList.toggle("hidden",!isManager);
+  showApplication(true);
+  loadLocal();
+  setSync("جارٍ الاتصال بالسحابة...","#fff4d8");
+
+  userUnsubscribe=userRef.onSnapshot(s=>{
+   if(!isManager&&s.exists){
+    const p=s.data()||{};
+    if(p.active!==true||p.role!=="worker"){
+     alert("تم إيقاف حسابك من مدير المعمل.");
+     logout();
+    }else{
+     userProfile=p;
+     permissions={...defaultPermissions,...(p.permissions||{})};
+     applyPermissions();
+    }
+   }
+  });
+
+  await initializeCloudData();
+
+  if(isManager){
+   workersUnsubscribe=fs.collection("users").onSnapshot(renderWorkers,error=>console.error(error));
+  }
+ }catch(e){
+  console.error(e);
+  await auth.signOut();
+  showApplication(false);
+  showLoginError(e.message||"تعذر التحقق من الحساب");
+ }
+}
+async function initializeCloudData(){
+ const snap=await cloudDoc.get();
+ if(snap.exists&&snap.data().data){
+  db=normalizeDb(snap.data().data);
+  saveLocal();
+ }else{
+  if(!isManager)throw new Error("لم يتم إعداد بيانات المعمل بعد. اطلب من المدير فتح البرنامج أولاً.");
+  db=normalizeDb(db);
+  await cloudDoc.set({data:db,updatedBy:currentUser.uid,updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  saveLocal();
+ }
+ cloudReady=true;
+ buildTeeth();
+ renderAll();
+ clearOrder();
+ orderDate.value=today();
+ paymentDate.value=today();
+ expenseDate.value=today();
+ reportTo.value=today();
+ applyPermissions();
+ setSync("متصل - تمت المزامنة","#eaf1ec");
+
+ dataUnsubscribe=cloudDoc.onSnapshot(s=>{
+  if(!s.exists||!s.data().data)return;
+  const incoming=normalizeDb(s.data().data);
+  const a=JSON.stringify(db),b=JSON.stringify(incoming);
+  if(a===b)return;
+  applyingRemote=true;
+  db=incoming;
+  saveLocal();
+  renderAll();
+  applyingRemote=false;
+  setSync("تم تحديث البيانات من السحابة","#eaf1ec");
+ },e=>{
+  console.error(e);
+  setSync("انقطع الاتصال بالسحابة","#ffe8e8");
+ });
+}
+function applyPermissions(){
+ document.querySelectorAll(".menu-btn").forEach(btn=>{
+  const match=btn.getAttribute("onclick")||"";
+  const m=match.match(/go\('([^']+)'\)/);
+  if(!m)return;
+  const id=m[1];
+  btn.classList.toggle("hidden",!isManager&&permissions[id]!==true);
+ });
+}
+function go(id){
+ if(!isManager&&permissions[id]!==true){
+  alert("ليس لديك صلاحية الوصول إلى هذا القسم");
+  return;
+ }
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+ window.scrollTo(0,0);
+ if(id==="reports")renderReport();
+ if(id==="settings"&&isManager)renderWorkersCache();
+}
+auth.onAuthStateChanged(user=>{
+ if(user)startUser(user);
+ else{
+  stopListeners();
+  currentUser=null;userProfile=null;isManager=false;cloudReady=false;
+  showApplication(false);
+  setSync("غير متصل");
+ }
+});
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function docName(id){return db.doctors.find(d=>d.id===id)?.name||"طبيب غير معروف";}
+function orderUnits(o){return Math.max(1,Number(o.units)||1);}
+function orderUnitPrice(o){if(o.unitPrice!==undefined&&o.unitPrice!==null)return val(o.unitPrice);return val(o.price)/orderUnits(o);}
+function orderTotal(o){if(o.total!==undefined&&o.total!==null)return val(o.total);return val(o.price);}
+const orderUnitsInput=document.getElementById("orderUnits");
+function updateOrderTotal(){let units=Math.max(1,Math.floor(Number(orderUnitsInput.value)||1));orderTotalPreview.value=money(units*val(orderPrice.value));}
+function options(){
+ const html='<option value="">اختر الطبيب</option>'+db.doctors.map(d=>`<option value="${esc(d.id)}">${esc(d.name)}${d.clinic?" - "+esc(d.clinic):""}</option>`).join("");
+ orderDoctor.innerHTML=html;paymentDoctor.innerHTML=html;
+}
+function clearDoctor(){doctorId.value="";doctorName.value="";doctorPhone.value="";clinicName.value="";clinicCity.value="";doctorNotes.value="";}
+function saveDoctor(){
+ const id=doctorId.value,name=doctorName.value.trim();
+ if(!name)return alert("أدخل اسم الطبيب");
+ const d={id:id||uid(),name,phone:doctorPhone.value.trim(),clinic:clinicName.value.trim(),city:clinicCity.value.trim(),notes:doctorNotes.value.trim()};
+ if(id)db.doctors=db.doctors.map(x=>x.id===id?d:x);else db.doctors.push(d);
+ save();clearDoctor();renderAll();alert("تم حفظ الطبيب");
+}
+function editDoctor(id){
+ const d=db.doctors.find(x=>x.id===id);if(!d)return;
+ doctorId.value=d.id;doctorName.value=d.name;doctorPhone.value=d.phone||"";
+ clinicName.value=d.clinic||"";clinicCity.value=d.city||"";doctorNotes.value=d.notes||"";go("doctors");
+}
+function deleteDoctor(id){
+ if(db.orders.some(o=>o.doctorId===id)||db.payments.some(p=>p.doctorId===id))return alert("هذا الطبيب لديه حسابات مرتبطة. لا يمكن حذفه.");
+ if(confirm("حذف الطبيب؟")){db.doctors=db.doctors.filter(d=>d.id!==id);save();renderAll();}
+}
+function totalOrders(id){return db.orders.filter(o=>o.doctorId===id).reduce((s,o)=>s+orderTotal(o),0);}
+function initialPaid(id){return db.orders.filter(o=>o.doctorId===id).reduce((s,o)=>s+val(o.paid),0);}
+function laterPaid(id){return db.payments.filter(p=>p.doctorId===id).reduce((s,p)=>s+val(p.amount),0);}
+function balance(id){return totalOrders(id)-initialPaid(id)-laterPaid(id);}
+function renderDoctors(){
+ doctorsTable.innerHTML=db.doctors.length?`<div class="table-wrap"><table><thead><tr><th>الطبيب</th><th>العيادة</th><th>المدينة</th><th>الهاتف</th><th>الرصيد</th><th>العمليات</th></tr></thead><tbody>${db.doctors.map(d=>`<tr><td>${esc(d.name)}</td><td>${esc(d.clinic)}</td><td>${esc(d.city)}</td><td>${esc(d.phone)}</td><td><b>${money(balance(d.id))}</b></td><td><button class="btn small light" onclick="editDoctor('${d.id}')">تعديل</button> <button class="btn small" onclick="doctorReport('${d.id}')">📄 التقرير</button> <button class="btn small red" onclick="deleteDoctor('${d.id}')">حذف</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا يوجد أطباء مسجلون.</div>";
+}
+
+/* نظام بالمر */
+const toothNames={1:"القاطع المركزي",2:"القاطع الجانبي",3:"الناب",4:"الضاحك الأول",5:"الضاحك الثاني",6:"الضرس الأول",7:"الضرس الثاني",8:"ضرس العقل"};
+const toothQuadrants={upperRight:"الفك العلوي الأيمن",upperLeft:"الفك العلوي الأيسر",lowerRight:"الفك السفلي الأيمن",lowerLeft:"الفك السفلي الأيسر"};
+function toothKey(q,n){return q+"-"+n;}
+function toothInfo(key){
+ const p=String(key).split("-"),q=p[0],n=Number(p[1]);
+ if(!toothQuadrants[q]||!toothNames[n])return null;
+ return {key,quadrant:q,number:n,jaw:toothQuadrants[q],name:toothNames[n]};
+}
+function convertOldFDI(n){
+ n=Number(n);const q=Math.floor(n/10),num=n%10;
+ const map={1:"upperRight",2:"upperLeft",3:"lowerLeft",4:"lowerRight"};
+ return map[q]&&num>=1&&num<=8?toothKey(map[q],num):null;
+}
+function normalizeTeeth(list){
+ if(!Array.isArray(list))return [];
+ const out=[];
+ list.forEach(item=>{
+  if(typeof item==="string"){if(toothInfo(item)&&!out.includes(item))out.push(item);}
+  else if(typeof item==="number"){const k=convertOldFDI(item);if(k&&!out.includes(k))out.push(k);}
+  else if(item&&typeof item==="object"){
+   if(item.quadrant&&item.number){const k=toothKey(item.quadrant,Number(item.number));if(toothInfo(k)&&!out.includes(k))out.push(k);}
+   else if(item.fdi){const k=convertOldFDI(item.fdi);if(k&&!out.includes(k))out.push(k);}
+  }
+ });
+ return out;
+}
+function teethDetails(list){
+ const a=normalizeTeeth(list);
+ return a.length?a.map(k=>{const t=toothInfo(k);return `<span class="tooth-detail"><b>${t.number}</b> - ${esc(t.name)}<br><small>${esc(t.jaw)}</small></span>`;}).join(""):"لا توجد أسنان محددة";
+}
+function teethText(list){return normalizeTeeth(list).map(k=>{const t=toothInfo(k);return t?t.jaw+" - السن "+t.number+" ("+t.name+")":"";}).filter(Boolean).join("، ")||"لا توجد أسنان محددة";}
+function buildTeeth(){
+ ["upperRight","upperLeft","lowerRight","lowerLeft"].forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML=[8,7,6,5,4,3,2,1].map(n=>`<button class="tooth" type="button" data-q="${id}" data-n="${n}">${n}<small>${toothNames[n]}</small></button>`).join("");
+ });
+ document.querySelectorAll(".tooth").forEach(b=>b.onclick=()=>{
+  const k=toothKey(b.dataset.q,Number(b.dataset.n));
+  if(selectedTeeth.has(k))selectedTeeth.delete(k);else selectedTeeth.add(k);
+  b.classList.toggle("selected",selectedTeeth.has(k));updateTeeth();
+ });
+}
+function updateTeeth(){selectedTeethBox.innerHTML=selectedTeeth.size?"<b>الأسنان المحددة:</b><br>"+teethDetails([...selectedTeeth]):"<b>الأسنان المحددة:</b> لا يوجد";}
+function clearTeeth(){selectedTeeth.clear();document.querySelectorAll(".tooth").forEach(b=>b.classList.remove("selected"));updateTeeth();}
+function newNo(){return "DL-"+String(db.nextOrder).padStart(5,"0");}
+function clearOrder(){
+ orderId.value="";orderNo.value=newNo();orderDate.value=today();orderDoctor.value="";
+ patientName.value="";orderUnitsInput.value=1;workType.selectedIndex=0;material.selectedIndex=0;
+ toothColor.value="";orderPrice.value=0;orderTotalPreview.value="0";orderPaid.value=0;
+ dueDate.value="";orderStatus.value="طلب جديد";orderNotes.value="";clearTeeth();
+}
+function saveOrder(){
+ const id=orderId.value;
+ if(!orderDoctor.value)return alert("اختر الطبيب");
+ const units=Math.max(1,Math.floor(Number(orderUnitsInput.value)||0));
+ if(!units)return alert("أدخل عدد وحدات صحيحاً");
+ const unitPrice=val(orderPrice.value),total=units*unitPrice,paid=val(orderPaid.value);
+ if(paid>total)return alert("المدفوع أكبر من الإجمالي");
+ const o={id:id||uid(),no:orderNo.value||newNo(),date:orderDate.value||today(),doctorId:orderDoctor.value,patient:patientName.value.trim(),units,work:workType.value,material:material.value,teeth:[...selectedTeeth],color:toothColor.value.trim(),unitPrice,total,price:total,paid,due:dueDate.value,status:orderStatus.value,notes:orderNotes.value.trim()};
+ if(id)db.orders=db.orders.map(x=>x.id===id?o:x);else{db.orders.push(o);db.nextOrder++;}
+ save();clearOrder();renderAll();alert("تم حفظ الطلب بنجاح");
+}
+function editOrder(id){
+ const o=db.orders.find(x=>x.id===id);if(!o)return;
+ orderId.value=o.id;orderNo.value=o.no;orderDate.value=o.date;orderDoctor.value=o.doctorId;
+ patientName.value=o.patient||"";orderUnitsInput.value=orderUnits(o);workType.value=o.work;
+ material.value=o.material;toothColor.value=o.color||"";orderPrice.value=orderUnitPrice(o);
+ orderTotalPreview.value=money(orderTotal(o));orderPaid.value=o.paid||0;dueDate.value=o.due||"";
+ orderStatus.value=o.status;orderNotes.value=o.notes||"";
+ selectedTeeth=new Set(normalizeTeeth(o.teeth||[]));
+ document.querySelectorAll(".tooth").forEach(b=>b.classList.toggle("selected",selectedTeeth.has(toothKey(b.dataset.q,Number(b.dataset.n)))));
+ updateTeeth();go("orders");
+}
+function deleteOrder(id){if(confirm("هل تريد حذف هذا الطلب؟")){db.orders=db.orders.filter(o=>o.id!==id);save();renderAll();}}
+function renderOrders(){
+ const q=(orderSearch.value||"").toLowerCase(),st=statusFilter.value;
+ const arr=db.orders.filter(o=>(!st||o.status===st)&&(!q||(o.no+" "+o.patient+" "+docName(o.doctorId)).toLowerCase().includes(q))).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+ ordersTable.innerHTML=arr.length?`<div class="table-wrap"><table><thead><tr><th>رقم الطلب</th><th>التاريخ</th><th>الطبيب</th><th>المريض</th><th>الوحدات</th><th>العمل</th><th>الأسنان</th><th>الإجمالي</th><th>المتبقي</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>${arr.map(o=>`<tr><td>${esc(o.no)}</td><td>${esc(o.date)}</td><td>${esc(docName(o.doctorId))}</td><td>${esc(o.patient)}</td><td>${orderUnits(o)}</td><td>${esc(o.work)}</td><td>${teethDetails(o.teeth||[])}</td><td>${money(orderTotal(o))}</td><td>${money(orderTotal(o)-val(o.paid))}</td><td><span class="pill">${esc(o.status)}</span></td><td><button class="btn small light" onclick="editOrder('${o.id}')">تعديل</button> <button class="btn small red" onclick="deleteOrder('${o.id}')">حذف</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا توجد طلبات.</div>";
+}
+function savePayment(){
+ const id=paymentDoctor.value,amount=val(paymentAmount.value);
+ if(!id)return alert("اختر الطبيب");if(amount<=0)return alert("أدخل مبلغاً صحيحاً");
+ db.payments.push({id:uid(),doctorId:id,amount,date:paymentDate.value||today(),note:paymentNote.value.trim()});
+ save();paymentAmount.value="";paymentNote.value="";renderAll();alert("تم تسجيل الدفعة");
+}
+function deletePayment(id){if(confirm("حذف الدفعة؟")){db.payments=db.payments.filter(p=>p.id!==id);save();renderAll();}}
+function renderAccounts(){
+ accountsTable.innerHTML=db.doctors.length?`<div class="table-wrap"><table><thead><tr><th>الطبيب</th><th>الطلبات</th><th>الدفعات الأولية</th><th>الدفعات اللاحقة</th><th>الرصيد</th><th>التقرير</th></tr></thead><tbody>${db.doctors.map(d=>`<tr><td>${esc(d.name)}</td><td>${money(totalOrders(d.id))}</td><td>${money(initialPaid(d.id))}</td><td>${money(laterPaid(d.id))}</td><td><b>${money(balance(d.id))}</b></td><td><button class="btn small" onclick="doctorReport('${d.id}')">📄 طباعة</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا توجد بيانات.</div>";
+ paymentsTable.innerHTML=db.payments.length?`<div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>الطبيب</th><th>البيان</th><th>المبلغ</th><th>إجراء</th></tr></thead><tbody>${db.payments.map(p=>`<tr><td>${esc(p.date)}</td><td>${esc(docName(p.doctorId))}</td><td>${esc(p.note)}</td><td>${money(p.amount)}</td><td><button class="btn small red" onclick="deletePayment('${p.id}')">حذف</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا توجد دفعات.</div>";
+}
+function doctorReport(id){
+ const d=db.doctors.find(x=>x.id===id);if(!d)return;
+ const os=db.orders.filter(o=>o.doctorId===id).sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+ const ps=db.payments.filter(p=>p.doctorId===id).sort((a,b)=>(a.date||"").localeCompare(b.date||""));
+ const rows=os.map((o,i)=>`<tr><td>${i+1}</td><td>${esc(o.patient)}</td><td>${orderUnits(o)}</td><td>${esc(o.work)}</td><td>${esc(o.date)}</td><td>${esc(o.no)}</td><td>${teethDetails(o.teeth||[])}</td><td>${esc(o.color||"")}</td><td>${money(orderUnitPrice(o))}</td><td>${money(o.paid)}</td><td>${money(orderTotal(o)-val(o.paid))}</td><td><b>${money(orderTotal(o))}</b></td></tr>`).join("");
+ const payRows=ps.map(p=>`<tr><td>${esc(p.date)}</td><td>${esc(p.note)}</td><td>${money(p.amount)}</td></tr>`).join("");
+ const html=`<h2>كشف حساب الطبيب</h2><div class="info"><strong>الطبيب:</strong> ${esc(d.name)}<br><strong>العيادة:</strong> ${esc(d.clinic)}<br><strong>المدينة:</strong> ${esc(d.city)}<br><strong>الهاتف:</strong> ${esc(d.phone)}</div><div class="summary"><div>إجمالي الطلبات: <b>${money(totalOrders(id))}</b></div><div>الدفعات الأولية: <b>${money(initialPaid(id))}</b></div><div>الدفعات اللاحقة: <b>${money(laterPaid(id))}</b></div><div>الرصيد المتبقي: <b>${money(balance(id))}</b></div></div><h3>تفاصيل طلبات العمل</h3><table><thead><tr><th>الرقم</th><th>المريض</th><th>الوحدات</th><th>العمل</th><th>التاريخ</th><th>رقم السند</th><th>الأسنان والفك</th><th>اللون</th><th>السعر</th><th>المدفوع</th><th>المتبقي</th><th>الإجمالي</th></tr></thead><tbody>${rows||'<tr><td colspan="12">لا توجد طلبات</td></tr>'}</tbody></table><h3>الدفعات اللاحقة</h3><table><thead><tr><th>التاريخ</th><th>البيان</th><th>المبلغ</th></tr></thead><tbody>${payRows||'<tr><td colspan="3">لا توجد دفعات</td></tr>'}</tbody></table><div class="manager-signature"><div class="manager-signature-box"><strong>${esc(db.settings.manager||"مدير المعمل")}</strong><br>التوقيع والختم</div></div>`;
+ printPage("كشف حساب - "+d.name,html);
+}
+function saveExpense(){
+ const amount=val(expenseAmount.value);if(amount<=0)return alert("أدخل مبلغ المصروف");
+ db.expenses.push({id:uid(),date:expenseDate.value||today(),type:expenseType.value,amount,note:expenseNote.value.trim()});
+ save();expenseAmount.value="";expenseNote.value="";renderAll();
+}
+function deleteExpense(id){if(confirm("حذف المصروف؟")){db.expenses=db.expenses.filter(e=>e.id!==id);save();renderAll();}}
+function renderExpenses(){
+ expensesTable.innerHTML=db.expenses.length?`<div class="table-wrap"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>البيان</th><th>المبلغ</th><th>إجراء</th></tr></thead><tbody>${db.expenses.map(e=>`<tr><td>${esc(e.date)}</td><td>${esc(e.type)}</td><td>${esc(e.note)}</td><td>${money(e.amount)}</td><td><button class="btn small red" onclick="deleteExpense('${e.id}')">حذف</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا توجد مصروفات.</div>";
+}
+function renderReport(){
+ const from=reportFrom.value,to=reportTo.value,inside=d=>(!from||d>=from)&&(!to||d<=to);
+ const os=db.orders.filter(o=>inside(o.date)),es=db.expenses.filter(e=>inside(e.date)),ps=db.payments.filter(p=>inside(p.date));
+ const revenue=os.reduce((s,o)=>s+orderTotal(o),0),paid=os.reduce((s,o)=>s+val(o.paid),0)+ps.reduce((s,p)=>s+val(p.amount),0),exp=es.reduce((s,e)=>s+val(e.amount),0);
+ reportContent.innerHTML=`<h3>ملخص الفترة</h3><div class="summary"><div>قيمة الطلبات: <b>${money(revenue)}</b></div><div>المبالغ المحصلة: <b>${money(paid)}</b></div><div>المصروفات: <b>${money(exp)}</b></div><div>صافي النقد بعد المصروفات: <b>${money(paid-exp)}</b></div></div><h3>الطلبات وتفاصيل الأسنان بنظام بالمر</h3>${table(["الرقم","التاريخ","الطبيب","المريض","الوحدات","العمل","الأسنان والفك","السعر","المدفوع","المتبقي","الإجمالي"],os.map((o,i)=>[i+1,o.date,docName(o.doctorId),o.patient,orderUnits(o),o.work,teethText(o.teeth||[]),money(orderUnitPrice(o)),money(o.paid),money(orderTotal(o)-val(o.paid)),money(orderTotal(o))]))}<h3>المصروفات</h3>${table(["التاريخ","النوع","البيان","المبلغ"],es.map(e=>[e.date,e.type,e.note,money(e.amount)]))}<h3>الدفعات</h3>${table(["التاريخ","الطبيب","البيان","المبلغ"],ps.map(p=>[p.date,docName(p.doctorId),p.note,money(p.amount)]))}`;
+}
+function table(headers,rows){
+ return `<div class="table-wrap"><table><thead><tr>${headers.map(x=>`<th>${esc(x)}</th>`).join("")}</tr></thead><tbody>${rows.length?rows.map(r=>`<tr>${r.map(x=>`<td>${esc(x)}</td>`).join("")}</tr>`).join(""):`<tr><td colspan="${headers.length}">لا توجد بيانات</td></tr>`}</tbody></table></div>`;
+}
+function printReport(){renderReport();printPage("التقرير العام للمعمل",reportContent.innerHTML);}
+function printPage(title,html){
+ const s=db.settings,phones=[s.phone1,s.phone2,s.phone3].filter(Boolean).map(esc).join(" | ");
+ const logoHtml=s.logo?`<img class="print-logo" src="${s.logo}" alt="شعار المعمل">`:"";
+ const w=window.open("","_blank");if(!w)return alert("تعذر فتح نافذة الطباعة. اسمح بالنوافذ المنبثقة.");
+ w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>${esc(title)}</title><style>body{font-family:Tahoma,Arial,sans-serif;color:#20372d;padding:18px}h1,h2,h3{text-align:center;color:#103b30}h1{font-size:21px}h2{font-size:17px}h3{font-size:14px;margin-top:24px}.header{position:relative;text-align:center;border-bottom:2px solid #c7a65b;padding:8px 215px 12px 115px;min-height:195px;margin-bottom:20px;display:flex;flex-direction:column;justify-content:center}.header h1{margin:12px 0 8px}.header div{line-height:1.8;font-size:11px}.print-logo{position:absolute;right:0;top:-18px;width:200px;height:180px;object-fit:contain;object-position:top right}.info{line-height:2;font-size:12px;background:#f3f6f4;padding:12px;border-radius:8px}.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:15px 0}.summary div{border:1px solid #ddd;padding:11px;border-radius:7px;font-size:12px}table{width:100%;border-collapse:collapse;font-size:10px;margin-top:10px}th,td{border:1px solid #bbb;padding:7px;text-align:right;vertical-align:top;line-height:1.8}th{background:#e8efeb}.tooth-detail{display:inline-block;border:1px solid #ddd;padding:4px;margin:2px;border-radius:5px}.manager-signature{margin-top:35px;padding-top:15px;display:flex;justify-content:flex-start;page-break-inside:avoid}.manager-signature-box{min-width:220px;max-width:300px;text-align:center;border-top:1px solid #999;padding-top:10px;font-size:12px;line-height:2}.manager-signature-box strong{color:#103b30;font-size:13px}@page{size:A4 landscape;margin:12mm}@media print{body{padding:0}}</style></head><body><div class="header">${logoHtml}<h1>🦷 ${esc(s.labName)}</h1><div>${phones}</div><div>${esc(s.address)}</div></div>${html}<script>window.onload=function(){setTimeout(function(){window.print()},500)};<\/script></body></html>`);
+ w.document.close();
+}
+function handleLogoUpload(event){
+ const file=event.target.files&&event.target.files[0];if(!file)return;
+ if(!file.type.startsWith("image/")){alert("يرجى اختيار صورة صالحة");event.target.value="";return;}
+ const reader=new FileReader();
+ reader.onload=e=>{
+  const img=new Image();
+  img.onload=()=>{
+   try{
+    const max=300,scale=Math.min(1,max/Math.max(img.width,img.height));
+    const canvas=document.createElement("canvas");
+    canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));
+    const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    selectedLogo=canvas.toDataURL("image/jpeg",.55);showLogoPreview(selectedLogo);
+    alert("تم تجهيز الشعار. اضغط حفظ معلومات المعمل لتثبيته.");
+   }catch(err){alert("تعذر تجهيز الصورة");}
+  };
+  img.onerror=()=>alert("تعذر قراءة الصورة");img.src=e.target.result;
+ };
+ reader.onerror=()=>alert("تعذر فتح الملف");reader.readAsDataURL(file);
+}
+function showLogoPreview(src){
+ const p=document.getElementById("logoPreview"),e=document.getElementById("logoPreviewEmpty");
+ if(src){p.src=src;p.classList.remove("hidden");e.classList.add("hidden");}
+ else{p.removeAttribute("src");p.classList.add("hidden");e.classList.remove("hidden");}
+}
+function removeLogo(){
+ if(!selectedLogo&&!db.settings.logo)return alert("لا يوجد شعار لحذفه");
+ if(!confirm("هل تريد حذف شعار المعمل؟"))return;
+ selectedLogo="";setLogoFile.value="";showLogoPreview("");
+}
+function saveSettings(){
+ if(!isManager)return alert("هذه الخاصية للمدير فقط");
+ const name=setLabName.value.trim();if(!name)return alert("أدخل اسم المعمل");
+ db.settings={...db.settings,labName:name,phone1:setPhone1.value.trim(),phone2:setPhone2.value.trim(),phone3:setPhone3.value.trim(),address:setAddress.value.trim(),extra:setExtra.value.trim(),logo:selectedLogo,manager:setManager.value.trim()};
+ save();renderSettings();alert("تم حفظ معلومات المعمل");
+}
+function renderSettings(){
+ const s=db.settings;
+ setLabName.value=s.labName||"";setPhone1.value=s.phone1||"";setPhone2.value=s.phone2||"";setPhone3.value=s.phone3||"";
+ setAddress.value=s.address||"";setExtra.value=s.extra||"";setManager.value=s.manager||"";
+ selectedLogo=s.logo||"";showLogoPreview(selectedLogo);
+ headerLab.textContent="🦷 "+(s.labName||"معمل الأسنان");
+ welcomeLab.textContent="مرحباً بكم في "+(s.labName||"معمل الأسنان");
+ headerDetails.textContent=[s.phone1,s.phone2,s.phone3,s.address,s.extra].filter(Boolean).join(" | ")||"نظام إدارة معمل الأسنان";
+}
+function backupData(){
+ const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="Dental-Lab-Backup-"+today()+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function restoreData(e){
+ const f=e.target.files&&e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   const x=JSON.parse(r.result);
+   if(!x||!Array.isArray(x.doctors)||!Array.isArray(x.orders)||!Array.isArray(x.payments)||!Array.isArray(x.expenses))throw Error();
+   if(!confirm("سيتم استبدال البيانات الحالية بالنسخة الاحتياطية. هل تريد المتابعة؟"))return;
+   db=normalizeDb(x);db.orders=db.orders.map(o=>({...o,teeth:normalizeTeeth(o.teeth||[])}));
+   save();renderAll();alert("تمت استعادة البيانات بنجاح");
+  }catch(err){alert("ملف النسخة الاحتياطية غير صالح");}
+  e.target.value="";
+ };
+ r.readAsText(f);
+}
+function clearAllData(){
+ if(!isManager)return alert("هذه الخاصية للمدير فقط");
+ if(!confirm("هل تريد حذف جميع البيانات؟"))return;
+ if(!confirm("تأكيد نهائي: هل أخذت نسخة احتياطية؟"))return;
+ const settings=db.settings;db={settings,doctors:[],orders:[],payments:[],expenses:[],nextOrder:1};
+ save();renderAll();
+}
+function renderHome(){
+ const os=db.orders,revenue=os.reduce((s,o)=>s+orderTotal(o),0);
+ const paid=os.reduce((s,o)=>s+val(o.paid),0)+db.payments.reduce((s,p)=>s+val(p.amount),0);
+ const debt=db.doctors.reduce((s,d)=>s+balance(d.id),0),exp=db.expenses.reduce((s,e)=>s+val(e.amount),0);
+ stOrders.textContent=os.length;stProgress.textContent=os.filter(o=>!["جاهز للتسليم","تم التسليم"].includes(o.status)).length;
+ stReady.textContent=os.filter(o=>o.status==="جاهز للتسليم").length;stDelivered.textContent=os.filter(o=>o.status==="تم التسليم").length;
+ stRevenue.textContent=money(revenue);stPaid.textContent=money(paid);stDebt.textContent=money(debt);stProfit.textContent=money(paid-exp);
+ const latest=[...os].sort((a,b)=>(b.date||"").localeCompare(a.date||"")).slice(0,5);
+ homeRecent.innerHTML=latest.length?table(["الطلب","التاريخ","الطبيب","المريض","الحالة"],latest.map(o=>[o.no,o.date,docName(o.doctorId),o.patient,o.status])):"<div class='empty'>لا توجد طلبات حتى الآن.</div>";
+}
+function renderAll(){options();renderDoctors();renderOrders();renderAccounts();renderExpenses();renderHome();renderSettings();}
+
+/* إدارة العاملين - المدير فقط */
+function saveWorker(){
+ if(!isManager)return alert("هذه الخاصية للمدير فقط");
+ const id=workerUid.value.trim(),name=workerName.value.trim();
+ if(!id||!name)return alert("أدخل UID العامل واسمه");
+ if(id===MANAGER_UID)return alert("لا يمكن تعديل حساب المدير بهذه الطريقة");
+ const perms={
+  doctors:permDoctors.checked,orders:permOrders.checked,accounts:permAccounts.checked,
+  expenses:permExpenses.checked,reports:permReports.checked,settings:permSettings.checked,backup:permBackup.checked
+ };
+ fs.collection("users").doc(id).set({
+  name,role:"worker",active:workerActive.value==="true",permissions:perms,
+  updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+ },{merge:true}).then(()=>{
+  workerUid.value="";workerName.value="";alert("تم حفظ بيانات العامل وصلاحياته");
+ }).catch(e=>{console.error(e);alert("تعذر حفظ العامل: "+e.message);});
+}
+function renderWorkers(snapshot){
+ if(!isManager)return;
+ const list=[];
+ snapshot.forEach(doc=>{
+  const u=doc.data()||{};
+  if(u.role==="worker")list.push({id:doc.id,...u});
+ });
+ workersList.innerHTML=list.length?`<div class="table-wrap"><table><thead><tr><th>العامل</th><th>UID</th><th>الحالة</th><th>الصلاحيات</th><th>إجراء</th></tr></thead><tbody>${list.map(u=>`<tr><td>${esc(u.name||"عامل")}</td><td style="direction:ltr">${esc(u.id)}</td><td>${u.active?"نشط":"موقوف"}</td><td>${Object.entries(u.permissions||{}).filter(x=>x[1]).map(x=>esc(x[0])).join("، ")}</td><td><button class="btn small light" onclick="editWorker('${u.id}')">تعديل</button><button class="btn small ${u.active?"red":"blue"}" onclick="toggleWorker('${u.id}',${!u.active})">${u.active?"إيقاف":"تفعيل"}</button></td></tr>`).join("")}</tbody></table></div>`:"<div class='empty'>لا يوجد عاملون مسجلون.</div>";
+}
+function renderWorkersCache(){}
+async function editWorker(id){
+ const snap=await fs.collection("users").doc(id).get();if(!snap.exists)return;
+ const u=snap.data()||{},p={...defaultPermissions,...(u.permissions||{})};
+ workerUid.value=id;workerName.value=u.name||"";workerActive.value=String(u.active===true);
+ permDoctors.checked=!!p.doctors;permOrders.checked=!!p.orders;permAccounts.checked=!!p.accounts;
+ permExpenses.checked=!!p.expenses;permReports.checked=!!p.reports;permSettings.checked=!!p.settings;permBackup.checked=!!p.backup;
+ window.scrollTo(0,0);
+}
+async function toggleWorker(id,active){
+ if(!isManager)return;
+ if(!confirm(active?"هل تريد تفعيل العامل؟":"هل تريد إيقاف العامل؟"))return;
+ try{await fs.collection("users").doc(id).update({active});}
+ catch(e){alert("تعذر تغيير حالة العامل: "+e.message);}
+}
+
+/* بدء الواجهة بعد نجاح تسجيل الدخول */
+</script>
+</body>
+</html>
